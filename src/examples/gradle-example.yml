@@ -1,0 +1,18 @@
+description: >
+  An example demonstrating how to use TestcontainersCloud with a Gradle project.
+usage:
+  version: 2.1
+  orbs:
+    gradle: circleci/gradle@3.0.0
+    tcc: atomicjar/testcontainers-cloud-orb@x.y
+  executors:
+    jdk17:
+      docker:
+        - image: cimg/openjdk:17.0
+  workflows:
+    build_and_test:
+      jobs:
+        - gradle/test:
+            executor: jdk17
+            pre-steps:
+              - tcc/setup

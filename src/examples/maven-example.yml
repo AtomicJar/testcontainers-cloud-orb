@@ -1,0 +1,19 @@
+description: >
+  An example demonstrating how to use TestcontainersCloud with a Maven project.
+usage:
+  version: 2.1
+  orbs:
+    maven: circleci/maven@1.4.0
+    tcc: atomicjar/testcontainers-cloud-orb@x.y
+  executors:
+    jdk17:
+      docker:
+        - image: cimg/openjdk:17.0
+  workflows:
+    build_and_test:
+      jobs:
+        - maven/test:
+            command: 'verify'
+            executor: jdk17
+            pre-steps:
+              - tcc/setup

@@ -1,0 +1,21 @@
+description: >
+  This command install Testcontainers Cloud agent and start it as a background process.
+parameters:
+  agent-download-dir:
+    type: string
+    default: /tmp
+    description: |
+      Specify the download directory of Testcontainers Cloud Agent. Defaults to /tmp
+steps:
+    - run:
+        name: Install TC Agent
+        environment:
+          PARAM_AGENT_DOWNLOAD_DIR: <<parameters.agent-download-dir>>
+        command: <<include(scripts/install.sh)>>
+    - run:
+        name: Start TC Agent
+        command: "<<parameters.agent-download-dir>>/agent"
+        background: true
+    - run:
+        name: Wait for TC Agent to start
+        command: "<<parameters.agent-download-dir>>/agent wait"
